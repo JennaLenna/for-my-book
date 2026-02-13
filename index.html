@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Series Planner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Book Series Planner</h1>
+            <button id="addSeriesBtn" class="btn-primary">+ New Series</button>
+        </header>
+
+        <div id="seriesList" class="series-list"></div>
+
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Create New Series</h2>
+                <form id="seriesForm">
+                    <div class="form-group">
+                        <label for="seriesName">Series Name</label>
+                        <input type="text" id="seriesName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="seriesDescription">Description</label>
+                        <textarea id="seriesDescription" name="description" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="seriesCover">Cover Image URL</label>
+                        <input type="url" id="seriesCover" name="coverImage" placeholder="https://example.com/image.jpg">
+                    </div>
+                    <button type="submit" class="btn-primary">Create Series</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
