@@ -86,34 +86,65 @@ class BookPlanner {
             return;
         }
 
-        container.innerHTML = this.series.map(series => `
-            <div class="series-card" data-id="${series.id}">
-                <div class="series-cover">
-                    ${series.coverImage ? 
-                        `<img src="${series.coverImage}" alt="${series.name}">` : 
-                        series.name.charAt(0).toUpperCase()
-                    }
-                </div>
-                <div class="series-content">
-                    <input 
-                        type="text" 
-                        class="series-title" 
-                        value="${series.name}"
-                        data-field="name"
-                        data-id="${series.id}"
-                    >
-                    <textarea 
-                        class="series-description"
-                        data-field="description"
-                        data-id="${series.id}"
-                    >${series.description}</textarea>
-                    <div class="series-meta">
-                        <span class="series-date">Created: ${series.dateCreated}</span>
-                        <button class="btn-danger" data-delete="${series.id}">Delete</button>
-                    </div>
-                </div>
-            </div>
-        `).join('');
+        container.innerHTML = '';
+        
+        this.series.forEach(series => {
+            const card = document.createElement('div');
+            card.className = 'series-card';
+            card.dataset.id = series.id;
+            
+            const cover = document.createElement('div');
+            cover.className = 'series-cover';
+            
+            if (series.coverImage) {
+                const img = document.createElement('img');
+                img.src = series.coverImage;
+                img.alt = series.name;
+                cover.appendChild(img);
+            } else {
+                cover.textContent = series.name.charAt(0).toUpperCase();
+            }
+            
+            const content = document.createElement('div');
+            content.className = 'series-content';
+            
+            const title = document.createElement('input');
+            title.type = 'text';
+            title.className = 'series-title';
+            title.value = series.name;
+            title.dataset.field = 'name';
+            title.dataset.id = series.id;
+            
+            const description = document.createElement('textarea');
+            description.className = 'series-description';
+            description.value = series.description;
+            description.dataset.field = 'description';
+            description.dataset.id = series.id;
+            
+            const meta = document.createElement('div');
+            meta.className = 'series-meta';
+            
+            const date = document.createElement('span');
+            date.className = 'series-date';
+            date.textContent = `Created: ${series.dateCreated}`;
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'btn-danger';
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.dataset.delete = series.id;
+            
+            meta.appendChild(date);
+            meta.appendChild(deleteBtn);
+            
+            content.appendChild(title);
+            content.appendChild(description);
+            content.appendChild(meta);
+            
+            card.appendChild(cover);
+            card.appendChild(content);
+            
+            container.appendChild(card);
+        });
 
         this.attachSeriesEventListeners();
     }

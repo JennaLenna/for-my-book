@@ -1,6 +1,6 @@
 # Book Series Planner
 
-A beautiful, minimalistic web application for planning and organizing your book series. Features real-time auto-save functionality using localStorage, ensuring your data persists forever even when you close or refresh the page.
+A beautiful, minimalistic web application for planning and organizing your book series. Features real-time auto-save functionality using localStorage, ensuring your data persists across sessions even when you close or refresh the page.
 
 ## Features
 
@@ -66,7 +66,7 @@ All data is stored locally in your browser using localStorage. This means:
 - ✅ Data persists across page refreshes and browser restarts
 - ✅ No internet connection required after initial load
 - ⚠️ Data is specific to the browser and domain
-- ⚠️ Clearing browser data will remove your series
+- ⚠️ Clearing browser data or cache will remove your series
 
 ---
 
