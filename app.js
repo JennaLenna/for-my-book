@@ -43,7 +43,7 @@ class BookPlanner {
     createSeries(form) {
         const formData = new FormData(form);
         const newSeries = {
-            id: Date.now().toString(),
+            id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
             name: formData.get('name'),
             description: formData.get('description'),
             coverImage: formData.get('coverImage') || '',
@@ -98,9 +98,20 @@ class BookPlanner {
             
             if (series.coverImage) {
                 const img = document.createElement('img');
-                img.src = series.coverImage;
-                img.alt = series.name;
-                cover.appendChild(img);
+                // Validate URL scheme for security
+                try {
+                    const url = new URL(series.coverImage);
+                    if (url.protocol === 'http:' || url.protocol === 'https:') {
+                        img.src = series.coverImage;
+                        img.alt = series.name;
+                        cover.appendChild(img);
+                    } else {
+                        cover.textContent = series.name.charAt(0).toUpperCase();
+                    }
+                } catch (e) {
+                    // Invalid URL, show first letter instead
+                    cover.textContent = series.name.charAt(0).toUpperCase();
+                }
             } else {
                 cover.textContent = series.name.charAt(0).toUpperCase();
             }
