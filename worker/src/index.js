@@ -29,7 +29,7 @@ export default {
         if (!body || typeof body !== 'object' || !body.files || typeof body.files !== 'object') {
           return jsonResponse({ error: 'Request body must include a files object.' }, 400, corsHeaders);
         }
-        const normalizedFiles = normalizeIncomingFiles(body?.files || {});
+        const normalizedFiles = normalizeIncomingFiles(body.files);
 
         await writePlannerFiles(env, normalizedFiles);
         const updatedAt = Date.now();

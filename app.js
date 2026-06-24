@@ -59,7 +59,7 @@ class SingleUserBookPlanner {
 
     attachEventListeners() {
         this.elements.saveBtn.addEventListener('click', () => {
-            this.syncNow({ manual: true });
+            this.syncNow({ isManualSync: true });
         });
 
         this.elements.plannerSections.addEventListener('input', (event) => {
@@ -161,7 +161,7 @@ class SingleUserBookPlanner {
         };
     }
 
-    async syncNow({ manual = false } = {}) {
+    async syncNow({ isManualSync = false } = {}) {
         clearTimeout(this.autosaveTimer);
 
         if (!this.apiBase) {
@@ -176,7 +176,7 @@ class SingleUserBookPlanner {
         }
 
         this.elements.saveBtn.disabled = true;
-        this.setSyncStatus(manual ? 'Saving...' : 'Syncing...', 'warn');
+        this.setSyncStatus(isManualSync ? 'Saving...' : 'Syncing...', 'warn');
 
         try {
             const payload = {
