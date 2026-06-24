@@ -299,6 +299,8 @@ class SingleUserBookPlanner {
 
             request.onsuccess = () => resolve(request.result);
             request.onerror = () => reject(request.error);
+            transaction.oncomplete = () => db.close();
+            transaction.onerror = () => db.close();
         });
     }
 
@@ -311,6 +313,8 @@ class SingleUserBookPlanner {
 
             request.onsuccess = () => resolve();
             request.onerror = () => reject(request.error);
+            transaction.oncomplete = () => db.close();
+            transaction.onerror = () => db.close();
         });
     }
 }

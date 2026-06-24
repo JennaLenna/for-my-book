@@ -199,12 +199,8 @@ function githubHeaders(env) {
 
 function encodeBase64(value) {
   const bytes = new TextEncoder().encode(value);
-  const chars = new Array(bytes.length);
-  let index = 0;
-  for (const byte of bytes) {
-    chars[index++] = String.fromCharCode(byte);
-  }
-  return btoa(chars.join(''));
+  const binary = Array.from(bytes, (byte) => String.fromCharCode(byte)).join('');
+  return btoa(binary);
 }
 
 function decodeBase64(value) {
