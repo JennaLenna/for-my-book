@@ -21,7 +21,7 @@ This project is a single-user planning app that works offline and syncs data to 
 
 ## Configure frontend
 
-Edit `/home/runner/work/for-my-book/for-my-book/index.html` and set:
+Edit `index.html` and set:
 
 ```html
 <script>
@@ -33,7 +33,7 @@ Edit `/home/runner/work/for-my-book/for-my-book/index.html` and set:
 
 See full deployment instructions in:
 
-- `/home/runner/work/for-my-book/for-my-book/worker/README.md`
+- `worker/README.md`
 
 ## Data files
 
@@ -49,6 +49,6 @@ The Worker also accepts additional safe file keys and writes them as `<key>.json
 
 ## Local run
 
-Open `/home/runner/work/for-my-book/for-my-book/index.html` in your browser.
+Open `index.html` in your browser.
 
 Without a Worker URL, the app still works locally with IndexedDB offline cache.

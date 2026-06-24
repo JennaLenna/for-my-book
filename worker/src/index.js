@@ -185,7 +185,7 @@ function githubContentsUrl(env, path) {
 
 function githubHeaders(env) {
   return {
-    Authorization: 'token ' + env.GITHUB_TOKEN,
+    Authorization: 'Bearer ' + env.GITHUB_TOKEN,
     Accept: 'application/vnd.github+json',
     'Content-Type': 'application/json',
     'User-Agent': 'book-planner-worker'
@@ -193,9 +193,16 @@ function githubHeaders(env) {
 }
 
 function encodeBase64(value) {
-  return btoa(unescape(encodeURIComponent(value)));
+  const bytes = new TextEncoder().encode(value);
+  let binary = '';
+  for (const byte of bytes) {
+    binary += String.fromCharCode(byte);
+  }
+  return btoa(binary);
 }
 
 function decodeBase64(value) {
-  return decodeURIComponent(escape(atob(value.replace(/\n/g, ''))));
+  const binary = atob(value.replace(/\n/g, ''));
+  const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
 }
