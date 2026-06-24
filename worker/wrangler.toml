@@ -3,8 +3,8 @@ main = "src/index.js"
 compatibility_date = "2024-12-01"
 
 [vars]
-# Set this to your GitHub Pages origin, e.g. https://jennalenna.github.io
-ALLOWED_ORIGIN = "*"
+# Set this to your exact GitHub Pages origin.
+ALLOWED_ORIGIN = "https://jennalenna.github.io"
 GITHUB_OWNER = "JennaLenna"
 GITHUB_REPO = "for-my-book"
 GITHUB_BRANCH = "main"

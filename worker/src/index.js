@@ -18,12 +18,17 @@ export default {
 
       if (request.method === 'GET') {
         const files = await readPlannerFiles(env, REQUIRED_FILES);
-        const updatedAt = Math.max(0, ...Object.values(files).map((value) => Number(value.updatedAt) || 0));
+        const updatedAt = Object.values(files).reduce((latest, value) => {
+          return Math.max(latest, Number(value.updatedAt) || 0);
+        }, 0);
         return jsonResponse({ files, updatedAt }, 200, corsHeaders);
       }
 
       if (request.method === 'POST') {
         const body = await request.json();
+        if (!body || typeof body !== 'object' || !body.files || typeof body.files !== 'object') {
+          return jsonResponse({ error: 'Request body must include a files object.' }, 400, corsHeaders);
+        }
         const normalizedFiles = normalizeIncomingFiles(body?.files || {});
 
         await writePlannerFiles(env, normalizedFiles);
@@ -70,7 +75,7 @@ function normalizeIncomingFiles(inputFiles) {
     }
 
     const content = typeof rawValue?.content === 'string' ? rawValue.content : '';
-    const updatedAt = Number(rawValue?.updatedAt) || Date.now();
+    const updatedAt = Number(rawValue?.updatedAt) || 0;
     output[key] = { content, updatedAt };
   }
 
@@ -194,11 +199,12 @@ function githubHeaders(env) {
 
 function encodeBase64(value) {
   const bytes = new TextEncoder().encode(value);
-  let binary = '';
+  const chars = new Array(bytes.length);
+  let index = 0;
   for (const byte of bytes) {
-    binary += String.fromCharCode(byte);
+    chars[index++] = String.fromCharCode(byte);
   }
-  return btoa(binary);
+  return btoa(chars.join(''));
 }
 
 function decodeBase64(value) {

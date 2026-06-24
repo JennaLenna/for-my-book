@@ -129,7 +129,7 @@ class SingleUserBookPlanner {
             const remoteState = await response.json();
             const normalizedRemote = this.normalizeRemoteState(remoteState);
 
-            const shouldReplaceLocal = !this.state.dirty || normalizedRemote.updatedAt >= this.state.updatedAt;
+            const shouldReplaceLocal = !this.state.dirty || normalizedRemote.updatedAt > this.state.updatedAt;
             if (shouldReplaceLocal) {
                 this.state.files = normalizedRemote.files;
                 this.state.updatedAt = normalizedRemote.updatedAt;
