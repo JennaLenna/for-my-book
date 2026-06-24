@@ -1,73 +1,54 @@
-# Book Series Planner
+# Single-User Book Planner (GitHub Pages + Cloudflare Worker)
 
-A beautiful, minimalistic web application for planning and organizing your book series. Features real-time auto-save functionality using localStorage, ensuring your data persists across sessions even when you close or refresh the page.
+This project is a single-user planning app that works offline and syncs data to JSON files in a private GitHub repository.
 
-## Features
+## Architecture
 
-✨ **Clean, Modern Interface** - Minimalistic design with a beautiful gradient background and card-based layout
+- **Frontend**: Vanilla JavaScript app (GitHub Pages)
+- **Storage**: IndexedDB local cache for offline support
+- **Sync API**: Cloudflare Worker (`/planner` GET + POST)
+- **Remote data**: JSON files in a private GitHub repository
+- **Security**: GitHub token stored only as a Cloudflare Worker secret
 
-📚 **Multiple Series Support** - Create and manage as many book series as you need
+## Frontend features
 
-💾 **Real-time Auto-Save** - All changes are automatically saved to localStorage instantly
+- Async loading and saving
+- Manual **Save Now** button
+- Debounced autosave
+- Graceful network error handling
+- Offline-first behavior with IndexedDB cache
+- Automatic sync retry when connection returns
 
-✏️ **Inline Editing** - Edit series names and descriptions directly on the cards
+## Configure frontend
 
-🖼️ **Cover Images** - Add cover images via URL to visually distinguish your series
+Edit `/home/runner/work/for-my-book/for-my-book/index.html` and set:
 
-📅 **Auto Timestamps** - Creation date is automatically tracked for each series
+```html
+<script>
+  window.BOOK_PLANNER_API = 'https://your-worker-subdomain.workers.dev';
+</script>
+```
 
-🗑️ **Easy Deletion** - Remove series you no longer need with a single click
+## Worker setup
 
-## Usage
+See full deployment instructions in:
 
-Simply open `index.html` in your web browser. No installation or server required!
+- `/home/runner/work/for-my-book/for-my-book/worker/README.md`
 
-### Creating a Series
+## Data files
 
-1. Click the "+ New Series" button
-2. Fill in the series name, description, and optionally a cover image URL
-3. Click "Create Series"
-4. Your series is instantly created and saved
+By default, the Worker stores:
 
-### Editing a Series
+- `planner-data/characters.json`
+- `planner-data/chapters.json`
+- `planner-data/worldbuilding.json`
+- `planner-data/notes.json`
+- `planner-data/timeline.json`
 
-- Click on the title or description to edit them directly
-- Changes are saved automatically as you type
-- No need to click save - it's all done in real-time!
+The Worker also accepts additional safe file keys and writes them as `<key>.json`.
 
-### Deleting a Series
+## Local run
 
-- Click the "Delete" button on any series card
-- Confirm the deletion
-- The series is permanently removed
+Open `/home/runner/work/for-my-book/for-my-book/index.html` in your browser.
 
-## Technical Details
-
-- Pure vanilla JavaScript (no frameworks required)
-- localStorage for data persistence
-- Responsive grid layout
-- No backend needed - runs entirely in the browser
-
-## Files
-
-- `index.html` - Main HTML structure
-- `styles.css` - All styling and design
-- `app.js` - Application logic and localStorage management
-
-## Browser Compatibility
-
-Works in all modern browsers that support localStorage:
-- Chrome, Firefox, Safari, Edge
-- Mobile browsers on iOS and Android
-
-## Data Storage
-
-All data is stored locally in your browser using localStorage. This means:
-- ✅ Data persists across page refreshes and browser restarts
-- ✅ No internet connection required after initial load
-- ⚠️ Data is specific to the browser and domain
-- ⚠️ Clearing browser data or cache will remove your series
-
----
-
-Built with ❤️ for writers and storytellers
+Without a Worker URL, the app still works locally with IndexedDB offline cache.

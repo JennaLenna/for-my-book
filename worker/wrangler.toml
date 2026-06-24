@@ -1,0 +1,11 @@
+name = "book-planner-worker"
+main = "src/index.js"
+compatibility_date = "2024-12-01"
+
+[vars]
+# Set this to your GitHub Pages origin, e.g. https://jennalenna.github.io
+ALLOWED_ORIGIN = "*"
+GITHUB_OWNER = "JennaLenna"
+GITHUB_REPO = "for-my-book"
+GITHUB_BRANCH = "main"
+GITHUB_DATA_DIR = "planner-data"
